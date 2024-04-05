@@ -1,0 +1,28 @@
+[workspace]
+resolver = "2"
+
+members = [
+    "src/common",
+    "src/storage/heapstore",
+#    "src/server",
+#    "src/cli-crusty",    
+#    "src/queryexe",
+#    "src/optimizer",
+#    "src/common",
+#    "src/utilities",
+#    "src/txn_manager",
+#    "src/storage",
+#    "src/index",
+]
+exclude = [
+    "e2e-benchmarks",
+    "e2e-tests",
+    "tpch",
+    "benchmarks",
+]
+
+[profile.release]
+debug = true
+lto = true
+panic = 'abort'
+codegen-units = 1
