@@ -1,4 +1,4 @@
-name: DB Test
+name: Cargo Clippy and Format Check
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  test:
+  linting:
     runs-on: ubuntu-latest
 
     steps:
@@ -37,4 +37,4 @@ jobs:
         cargo fmt --all -- --check && 
         cargo clippy --all --all-targets --verbose --no-default-features &&
         cargo clippy --all --all-targets --verbose --all-features &&
-        echo "All checks passed!"
+        echo "All Ok!"
