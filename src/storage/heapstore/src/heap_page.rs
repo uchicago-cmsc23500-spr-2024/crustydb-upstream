@@ -475,7 +475,7 @@ mod tests {
             tuple_bytes3.clone(),
             tuple_bytes4.clone(),
         ];
-        let page_bytes = p.to_bytes().clone();
+        let page_bytes = *p.to_bytes();
 
         // Test iteration 1
         let mut iter = p.into_iter();
@@ -504,7 +504,7 @@ mod tests {
         let mut p = Page::from_bytes(page_bytes);
         assert_eq!(Some(4), p.add_value(&tuple_bytes));
         //get the updated bytes
-        let page_bytes = p.to_bytes().clone();
+        let page_bytes = *p.to_bytes();
         count = 0;
         for _ in p {
             count += 1;
