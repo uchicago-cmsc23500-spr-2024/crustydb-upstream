@@ -43,6 +43,7 @@ impl Page {
     }
 
     /// Create a page from a byte array
+    #[allow(dead_code)]
     pub fn from_bytes(data: [u8; PAGE_SIZE]) -> Self {
         todo!("Your code here")
     }
