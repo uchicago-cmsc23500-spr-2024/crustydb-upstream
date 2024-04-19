@@ -9,7 +9,7 @@ mod tests {
     use common::storage_trait::StorageTrait;
     use heapstore::storage_manager::StorageManager as HeapStorageManager;
     use memstore::storage_manager::StorageManager as MemStorageManager;
-    use sledstore::storage_manager::StorageManager as SledStorageManager;
+    //use sledstore::storage_manager::StorageManager as SledStorageManager;
     use utilities::random::{gen_random_byte_vec, gen_random_int};
     use utilities::vec_compare::compare_unordered;
 
@@ -26,7 +26,6 @@ mod tests {
     #[rstest]
     #[case::mem(get_test_sm::<MemStorageManager>())]
     #[case::heap(get_test_sm::<HeapStorageManager>())]
-    #[case::sled(get_test_sm::<SledStorageManager>())]
     fn sm_inserts<T: StorageTrait>(#[case] instance: T) {
         let t = TransactionId::new();
         let sizes: Vec<usize> = vec![10, 50, 75, 100, 500, 1000];
@@ -45,7 +44,6 @@ mod tests {
     #[rstest]
     #[case::mem(get_test_sm::<MemStorageManager>())]
     #[case::heap(get_test_sm::<HeapStorageManager>())]
-    #[case::sled(get_test_sm::<SledStorageManager>())]
     fn sm_insert_delete<T: StorageTrait>(#[case] instance: T) {
         let t = TransactionId::new();
         let mut expected: Vec<Vec<u8>> = (0..100)
@@ -68,7 +66,6 @@ mod tests {
     #[rstest]
     #[case::mem(get_test_sm::<MemStorageManager>())]
     #[case::heap(get_test_sm::<HeapStorageManager>())]
-    #[case::sled(get_test_sm::<SledStorageManager>())]
     fn sm_insert_updates<T: StorageTrait>(#[case] instance: T) {
         let t = TransactionId::new();
         let mut expected: Vec<Vec<u8>> = (0..100)
@@ -94,7 +91,6 @@ mod tests {
     #[rstest]
     #[case::mem(get_test_sm::<MemStorageManager>())]
     #[case::heap(get_test_sm::<HeapStorageManager>())]
-    #[case::sled(get_test_sm::<SledStorageManager>())]
     #[should_panic]
     fn sm_no_container<T: StorageTrait>(#[case] instance: T) {
         let t = TransactionId::new();
@@ -124,7 +120,6 @@ mod tests {
     #[rstest]
     #[case::mem(get_sm::<MemStorageManager>, "mem_sm_dir")]
     #[case::heap(get_sm::<HeapStorageManager>, "heap_sm_dir")]
-    #[case::sled(get_sm::<SledStorageManager>, "sled_sm_dir")]
     fn sm_shutdown<T: StorageTrait, F>(#[case] get_sm: F, #[case] path: &str)
     where
         F: Fn(&Path) -> T,

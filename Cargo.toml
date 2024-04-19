@@ -4,15 +4,14 @@ resolver = "2"
 members = [
     "src/common",
     "src/storage/heapstore",
-#    "src/server",
-#    "src/cli-crusty",    
-#    "src/queryexe",
-#    "src/optimizer",
-#    "src/common",
-#    "src/utilities",
-#    "src/txn_manager",
-#    "src/storage",
-#    "src/index",
+    "src/storage/memstore",
+    "src/common",
+    "src/cli-crusty",
+    #"src/server",
+    "src/txn_manager",
+    #"src/optimizer",
+    #"src/queryexe",
+    "src/utilities",
 ]
 exclude = [
     "e2e-benchmarks",

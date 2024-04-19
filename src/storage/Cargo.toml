@@ -10,6 +10,5 @@ rstest = "0.18"
 tempfile = "3.9"
 heapstore = { path = "./heapstore" }
 memstore = { path = "./memstore" }
-sledstore = { path = "./sledstore" }
 utilities = { path = "../utilities" }
 common = { path = "../common" }
