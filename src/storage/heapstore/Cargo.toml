@@ -33,6 +33,5 @@ common = { path = "../../common" }
 criterion = "0.5"
 
 [[bench]]
-name = "page_bench"
+name = "heap_bench"
 harness = false
-
