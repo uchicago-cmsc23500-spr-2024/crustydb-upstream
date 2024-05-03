@@ -1,7 +1,7 @@
 use common::prelude::*;
 use common::storage_trait::StorageTrait;
+use common::testutil::gen_random_test_sm_dir;
 
-use core::panic;
 use std::collections::HashMap;
 use std::fs::{self, OpenOptions};
 use std::path::{Path, PathBuf};
@@ -15,9 +15,10 @@ type ContainerMap = Arc<RwLock<HashMap<ValueId, Vec<u8>>>>;
 /// The MemStore StorageManager. A map for storing containers, a map for tracking the next insert ID,
 /// and where to persist on shutdown/startup
 pub struct StorageManager {
+    is_temp: bool,
     containers: Arc<RwLock<HashMap<ContainerId, ContainerMap>>>,
     last_insert: Arc<RwLock<HashMap<ContainerId, ValueId>>>,
-    storage_dir: Option<PathBuf>,
+    storage_dir: PathBuf,
     container_names: Arc<RwLock<HashMap<String, ContainerId>>>,
 }
 
@@ -44,9 +45,10 @@ impl StorageTrait for StorageManager {
                 &storage_dir
             );
             StorageManager {
+                is_temp: false,
                 containers: Arc::new(RwLock::new(HashMap::new())),
                 last_insert: Arc::new(RwLock::new(HashMap::new())),
-                storage_dir: Some(storage_dir.to_path_buf()),
+                storage_dir: storage_dir.to_path_buf(),
                 container_names: Arc::new(RwLock::new(HashMap::new())),
             }
         }
@@ -54,10 +56,12 @@ impl StorageTrait for StorageManager {
 
     /// Create a new SM that will not be persisted
     fn new_test_sm() -> Self {
+        let storage_dir = gen_random_test_sm_dir();
         StorageManager {
+            is_temp: true,
             containers: Arc::new(RwLock::new(HashMap::new())),
             last_insert: Arc::new(RwLock::new(HashMap::new())),
-            storage_dir: None,
+            storage_dir,
             container_names: Arc::new(RwLock::new(HashMap::new())),
         }
     }
@@ -266,12 +270,7 @@ impl StorageTrait for StorageManager {
     }
 
     fn get_storage_path(&self) -> &Path {
-        match self.storage_dir {
-            Some(ref p) => p.as_path(),
-            None => {
-                panic!("No storage path for test SM")
-            }
-        }
+        self.storage_dir.as_path()
     }
 
     fn reset(&self) -> Result<(), CrustyError> {
@@ -290,7 +289,8 @@ impl StorageTrait for StorageManager {
 
     fn shutdown(&self) {
         info!("Shutting down and persisting containers");
-        if let Some(storage_dir) = &self.storage_dir {
+        if !self.is_temp {
+            let storage_dir = self.storage_dir.as_path();
             fs::create_dir_all(storage_dir).expect("Unable to create dir to store SM");
             let containers = self.containers.read().unwrap();
             for (c_id, vals_lock) in containers.iter() {
@@ -357,9 +357,10 @@ impl StorageManager {
         }
 
         StorageManager {
+            is_temp: false,
             containers: Arc::new(RwLock::new(container_map)),
             last_insert: Arc::new(RwLock::new(last_ins)),
-            storage_dir: Some(storage_dir.to_path_buf()),
+            storage_dir: storage_dir.to_path_buf(),
             container_names: Arc::new(RwLock::new(HashMap::new())),
         }
     }

@@ -112,7 +112,7 @@ impl ServerState {
             info!("TODO: Save DB state to {:?}", self.server_state_dir);
         }
         {
-            error!("server_state_dir should exist");
+            // error!("server_state_dir should exist");
             //TODO panic if needed
         }
 

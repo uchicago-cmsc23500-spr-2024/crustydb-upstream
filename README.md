@@ -22,6 +22,17 @@ crate. The files that you need to modify are:
 
 If you are also implementing a Buffer Pool, you will additionally need to modify
 the following files:
-- `src/storage/heapstore/src/buffer_pool.rs`
+- 
+
+Please see your handout instructions for more information.
+
+## CrustyDB 3 - Query Operator Milestone
+Complete the implementation of the query operators in the `src/queryexe/src/opiterator`
+crate. The files that you need to modify are:
+
+- `src/queryexe/src/opiterator/nested_loop_join.rs`
+- `src/queryexe/src/opiterator/hash_join.rs`
+- `src/queryexe/src/opiterator/aggregate.rs`
+
 
 Please see your handout instructions for more information.
