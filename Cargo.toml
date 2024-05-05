@@ -7,10 +7,10 @@ members = [
     "src/storage/memstore",
     "src/common",
     "src/cli-crusty",
-    #"src/server",
+    "src/server",
     "src/txn_manager",
-    #"src/optimizer",
-    #"src/queryexe",
+    "src/optimizer",
+    "src/queryexe",
     "src/utilities",
 ]
 exclude = [
