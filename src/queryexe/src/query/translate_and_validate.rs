@@ -419,6 +419,7 @@ impl TranslateAndValidate {
         Ok(())
     }
 
+    #[allow(clippy::ptr_arg)]
     fn process_cross_product(&mut self, nodes: &Vec<OpIndex>) -> Result<OpIndex, CrustyError> {
         if nodes.is_empty() {
             return self

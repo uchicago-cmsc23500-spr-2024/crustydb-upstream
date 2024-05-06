@@ -205,6 +205,7 @@ impl ReservoirStatManager {
         Ok(container_samples.schema.clone())
     }
 
+    #[allow(clippy::only_used_in_recursion)]
     fn eval_astexpr(&self, expr: &AstExpr, tuple: &Tuple) -> Result<Field, CrustyError> {
         match expr {
             AstExpr::Literal(field) => Ok(field.clone()),

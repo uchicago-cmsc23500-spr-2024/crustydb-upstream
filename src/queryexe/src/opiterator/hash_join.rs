@@ -21,12 +21,12 @@ pub struct HashEqJoin {
 }
 
 impl HashEqJoin {
-    /// Constructor for a hash equi-join operator.
+    /// NestedLoopJoin constructor. Creates a new node for a nested-loop join.
     ///
     /// # Arguments
     ///
-    /// * `left_index` - Index of the left field in join condition.
-    /// * `right_index` - Index of the right field in join condition.
+    /// * `left_expr` - ByteCodeExpr for the left field in join condition.
+    /// * `right_expr` - ByteCodeExpr for the right field in join condition.
     /// * `left_child` - Left child of join operator.
     /// * `right_child` - Left child of join operator.
     pub fn new(
