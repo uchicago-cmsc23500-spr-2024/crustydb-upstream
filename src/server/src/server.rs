@@ -80,7 +80,7 @@ fn create_server_state(base_dir: PathBuf) -> &'static ServerState {
 #[derive(Deserialize, Debug, Parser)]
 pub struct ServerConfig {
     /// Server IP address
-    #[clap(short = 'h', long = "host", default_value = "127.0.0.1")]
+    #[clap(short = 's', long = "server", default_value = "127.0.0.1")]
     host: String,
     /// Server port number
     #[clap(short = 'p', long = "port", default_value = "3333")]

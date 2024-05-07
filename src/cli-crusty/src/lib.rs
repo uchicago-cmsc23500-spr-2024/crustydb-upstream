@@ -19,7 +19,7 @@ pub use common::commands::Response;
 #[derive(Parser, Deserialize, Debug)]
 pub struct ClientConfig {
     /// Server IP address
-    #[clap(short = 'h', long = "host", default_value = "0.0.0.0")]
+    #[clap(short = 's', long = "server", default_value = "0.0.0.0")]
     host: String,
     /// Server port number
     #[clap(short = 'p', long = "port", default_value = "3333")]
