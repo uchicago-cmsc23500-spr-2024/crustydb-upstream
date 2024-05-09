@@ -1,6 +1,7 @@
 extern crate rustyline;
 use common::error::c_err;
 use common::{CrustyError, QueryResult};
+use env_logger::Env;
 use log::{debug, error, info};
 use rustyline::history::FileHistory;
 use serde::Deserialize;
@@ -59,6 +60,8 @@ impl Client {
     }
 
     pub fn run_cli(&mut self) {
+        env_logger::Builder::from_env(Env::default().default_filter_or("info")).init();
+
         let mut rl = DefaultEditor::new().unwrap();
         if rl.load_history("history.txt").is_err() {
             info!("No previous history.");
