@@ -86,7 +86,7 @@ impl SQLLogicTestEntry {
             TestExpectation::ResultMatch(is_ordered, file_path) => {
                 if let Response::QueryResult(qr) = response {
                     let expected = csv::ReaderBuilder::new()
-                        .has_headers(true)
+                        .has_headers(false)
                         .from_path(file_path)
                         .map_err(|e| {
                             CrustyError::CrustyError(format!("Failed to read csv: {}", e))
@@ -97,7 +97,7 @@ impl SQLLogicTestEntry {
                         .ok_or(c_err("Response is not a result of a select query"))?;
                     let mut csv_str = Cursor::new(Vec::new());
                     let mut csv_writer = csv::WriterBuilder::new()
-                        .has_headers(true)
+                        .has_headers(false)
                         .from_writer(&mut csv_str);
 
                     for record in result {
@@ -112,7 +112,7 @@ impl SQLLogicTestEntry {
                     drop(csv_writer);
 
                     let result_reader = csv::ReaderBuilder::new()
-                        .has_headers(true)
+                        .has_headers(false)
                         .from_reader(csv_str.get_ref().as_slice());
 
                     if *is_ordered {
@@ -221,8 +221,8 @@ fn parse_expectation(line: &str) -> io::Result<TestExpectation> {
                 ));
             }
 
-            let is_match = parts[0] == "match";
-            Ok(TestExpectation::ResultMatch(is_match, path))
+            let is_ordered = parts[0] == "omatch";
+            Ok(TestExpectation::ResultMatch(is_ordered, path))
         }
         _ => Err(io::Error::new(
             io::ErrorKind::InvalidData,
